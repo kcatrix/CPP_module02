@@ -1,42 +1,48 @@
 #include <iostream>
 #include <cmath>
 
-class Fixed 
+class Fixed
 {
-	private:
-		static const int bits = 8;
-		int value;
 	public:
-		Fixed(void);
-		Fixed(const int val);
-		Fixed(const Fixed &copy);
-		Fixed(const float val);
-		~Fixed(void);
+		Fixed();
+		Fixed(int const int_value);
+		Fixed(float const float_value);
+		Fixed(const Fixed &src);
+		~Fixed();
 
-		void operator=(const Fixed &copy);
-		Fixed	operator+(const Fixed &n) const;
-		Fixed	operator-(const Fixed &n) const;
-		Fixed	operator*(const Fixed &n) const;
-		Fixed	operator/(const Fixed &n) const;
+		Fixed &	operator=(const Fixed &rhs);
 
-		bool	operator>(const Fixed &n) const;
-		bool	operator<(const Fixed &n) const;
-		bool	operator>=(const Fixed &n) const;
-		bool	operator<=(const Fixed &n) const;
-		bool	operator==(const Fixed &n) const;
-		bool	operator!=(const Fixed &n) const;
+		bool	operator<(const Fixed &rhs) const;
+		bool	operator>(const Fixed &rhs) const;
+		bool	operator<=(const Fixed &rhs) const;
+		bool	operator>=(const Fixed &rhs) const;
+		bool	operator==(const Fixed &rhs) const;
+		bool	operator!=(const Fixed &rhs) const;
 
-		Fixed&	operator++(void);
-		Fixed	operator++(int);
-		Fixed&	operator--(void);
-		Fixed	operator--(int);
-		int	getRawBits(void) const;
-		void setRawBits(const int raw);
-		float toFloat(void) const;
-		int toInt(void) const;
+		Fixed	operator+(const Fixed &rhs);
+		Fixed	operator-(const Fixed &rhs);
+		Fixed	operator*(const Fixed &rhs);
+		Fixed	operator/(const Fixed &rhs);
 
-		const static Fixed&	min(const Fixed &a, const Fixed &b);
-		const static Fixed&	max(const Fixed &a, const Fixed &b);
+		Fixed &	operator++(void); 
+		Fixed & operator--(void);
+		Fixed	operator++(int); 
+		Fixed	operator--(int); 
+
+		static Fixed	min(Fixed &value1, Fixed &value2);
+		static Fixed	min(const Fixed &value1, const Fixed &value2);
+		static Fixed	max(Fixed &value1, Fixed &value2);
+		static Fixed	max(const Fixed &value1, const Fixed &value2);
+
+		void	setRawBits(int const raw);
+		int		getRawBits(void) const;
+
+		float	toFloat(void) const;
+		int		toInt(void) const;
+
+	private:
+		int					_number;
+		static const int	_bits = 8;
 };
 
-std::ostream &operator<<(std::ostream &stream, const Fixed &fixed);
+std::ostream &	operator<<(std::ostream & o, Fixed const & rhs);

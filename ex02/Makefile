@@ -1,19 +1,32 @@
+CC = g++
+
+RM = rm -f
+
+CFLAGS = -Wall -Wextra -Werror -std=c++98 
+
 NAME = a.out
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp Fixed.cpp
+SRCDIR = ./srcs
 
-OBJS = ${SRCS:.cpp=.o}
-all: ${NAME}
+SRC = $(wildcard *.cpp)
 
-${NAME}: ${OBJS}
-	${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+OBJ = $(SRC:.cpp=.o)
 
-fclean: clean
-	rm -f ${NAME}
+all:
+	@$(MAKE) -j $(NAME)	
+
+$(NAME): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+
+%.o : %.cpp
+	$(CC) -c $(CFLAGS) $(SRC) $< -o $@ 
 
 clean:
-	rm -f ${OBJS}
+	$(RM) $(OBJ)
+
+fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
